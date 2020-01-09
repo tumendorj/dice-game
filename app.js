@@ -4,9 +4,11 @@ var activePlayer;
 var scores;
 // тоглогчдын ээлжиндээ цуглуулж байгааг хадгалах хувьсагч
 var roundScore;
+var isNewgame;
 var diceBtn = document.querySelector(".dice");
 
 function newGame() {
+  isNewgame = true;
   // тоглогчын ээлжийг хадгалах хувьсагч. нэгдүгээр тоглогч 0, хоёрдугаар тоглогч 1
   activePlayer = 0;
 
@@ -33,34 +35,41 @@ function newGame() {
 }
 newGame();
 document.querySelector(".btn-roll").addEventListener("click", function() {
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
-  diceBtn.style.display = "block";
-  diceBtn.src = "dice-" + diceNumber + ".png";
-  if (diceNumber !== 1) {
-    //тоглогчийн оноог нэмэгдүүлэх
-    roundScore += diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
-  } else {
-    switchToNextPlayer();
+  if (isNewgame) {
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    diceBtn.style.display = "block";
+    diceBtn.src = "dice-" + diceNumber + ".png";
+    if (diceNumber !== 1) {
+      //тоглогчийн оноог нэмэгдүүлэх
+      roundScore += diceNumber;
+      document.getElementById(
+        "current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      switchToNextPlayer();
+    }
   }
 });
 document.querySelector(".btn-hold").addEventListener("click", function() {
-  // тоглогчийн тухайн оноог нийт оноон дээр нэмнэ
-  scores[activePlayer] += roundScore;
-  if (scores[activePlayer] >= 10) {
-    document.getElementById("name-" + activePlayer).innerHTML = "winner";
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
-  } else {
-    // тоглогчийн ээлжийг солино
-    switchToNextPlayer();
+  if (isNewgame) {
+    // тоглогчийн тухайн оноог нийт оноон дээр нэмнэ
+    scores[activePlayer] += roundScore;
+    if (scores[activePlayer] >= 10) {
+      isNewgame = false;
+      document.getElementById("name-" + activePlayer).innerHTML = "winner";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      // тоглогчийн ээлжийг солино
+      switchToNextPlayer();
+    }
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
   }
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
 });
 document.querySelector(".btn-new").addEventListener("click", function() {
   //
