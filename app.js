@@ -1,20 +1,37 @@
 // тоглогчын ээлжийг хадгалах хувьсагч. нэгдүгээр тоглогч 0, хоёрдугаар тоглогч 1
-var activePlayer = 0;
-
+var activePlayer;
 // Тоглогчдын цуглуулсан оноог хадгалах
-var scores = [0, 0];
-
+var scores;
 // тоглогчдын ээлжиндээ цуглуулж байгааг хадгалах хувьсагч
-var roundScore = 0;
-
-document.getElementById("score-0").textContent = 0;
-document.getElementById("score-1").textContent = 0;
-document.getElementById("current-0").textContent = 0;
-document.getElementById("current-1").textContent = 0;
-
+var roundScore;
 var diceBtn = document.querySelector(".dice");
-diceBtn.style.display = "none";
 
+function newGame() {
+  // тоглогчын ээлжийг хадгалах хувьсагч. нэгдүгээр тоглогч 0, хоёрдугаар тоглогч 1
+  activePlayer = 0;
+
+  // Тоглогчдын цуглуулсан оноог хадгалах
+  scores = [0, 0];
+
+  // тоглогчдын ээлжиндээ цуглуулж байгааг хадгалах хувьсагч
+  roundScore = 0;
+
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
+
+  diceBtn.style.display = "none";
+  document.getElementById("name-" + activePlayer).innerHTML =
+    "Player " + (activePlayer + 1);
+  document
+    .querySelector(".player-" + activePlayer + "-panel")
+    .classList.remove("winner");
+  document
+    .querySelector(".player-" + activePlayer + "-panel")
+    .classList.add("active");
+}
+newGame();
 document.querySelector(".btn-roll").addEventListener("click", function() {
   var diceNumber = Math.floor(Math.random() * 6) + 1;
   diceBtn.style.display = "block";
@@ -44,6 +61,10 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
   }
   document.getElementById("score-" + activePlayer).textContent =
     scores[activePlayer];
+});
+document.querySelector(".btn-new").addEventListener("click", function() {
+  //
+  newGame();
 });
 function switchToNextPlayer() {
   roundScore = 0;
