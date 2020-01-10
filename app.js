@@ -54,7 +54,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
   if (isNewgame) {
     // тоглогчийн тухайн оноог нийт оноон дээр нэмнэ
     scores[activePlayer] += roundScore;
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       isNewgame = false;
       document.getElementById("name-" + activePlayer).innerHTML = "winner";
       document
