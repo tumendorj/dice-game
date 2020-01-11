@@ -54,6 +54,8 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
   if (isNewgame) {
     // тоглогчийн тухайн оноог нийт оноон дээр нэмнэ
     scores[activePlayer] += roundScore;
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
     if (scores[activePlayer] >= 100) {
       isNewgame = false;
       document.getElementById("name-" + activePlayer).innerHTML = "winner";
@@ -67,8 +69,6 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       // тоглогчийн ээлжийг солино
       switchToNextPlayer();
     }
-    document.getElementById("score-" + activePlayer).textContent =
-      scores[activePlayer];
   }
 });
 document.querySelector(".btn-new").addEventListener("click", function() {
